@@ -21,13 +21,21 @@ This chatbot is built using Python and utilizes machine learning techniques to u
     cd hospital-system-chatbot
     ```
 
-2. **Install the necessary dependencies:**
+2. **Set up a virtual environment:**
+
+    ```bash
+    python -m venv venv
+    source venv/bin/activate
+    ```
+    For windows users, replace the `source venv/bin/activate` with `venv\Scripts\activate` to activate the environment.
+
+3. **Install the necessary dependencies:**
 
     ```bash
     pip install -r requirements.txt
     ```
 
-3. **Set up environment variables:**
+4. **Set up environment variables:**
     Create a `.env` file in the project root and add the necessary configuration details (e.g., API keys, database URLs). An example of what is requires is shown in the `dotenv` file
 
     1. **Get a Cohere API Key:**
@@ -49,13 +57,14 @@ This chatbot is built using Python and utilizes machine learning techniques to u
     NEO4J_USERNAME=your-neo4j-username
     NEO4J_PASSWORD=your-neo4j-password
     ```
-4. **Populate the Neo4j database:**
+5. **Populate the Neo4j database:**
 
     Run the following script to populate the Neo4j database with the required data:
 
     ```bash
     python neo4j_etl/hospital_bulk_csv_write.py
-    ```
+    ``
+    `
 ## Usage
 
 Here are some examples of how to use the chatbot:

@@ -1,3 +1,5 @@
+beautifulsoup4
+chromadb
 langchain
 langchain-cohere
 langchain-community
@@ -5,4 +7,5 @@ langchainhub
 neo4j
 numpy
 python-dotenv
+retry
 toml

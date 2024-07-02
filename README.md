@@ -1,9 +1,16 @@
 # Hospital System Chatbot
 
-A simple chatbot designed to assist stakeholders to access and query their hospital data without needing technical expertise. This tool greatly improved data visibility and decision-making efficiency.
+A simple RAG chatbot designed to assist stakeholders to access and query their hospital data without needing technical expertise. This tool greatly improved data visibility and decision-making efficiency.
 
 ## Description
-This chatbot is built using Python and utilizes machine learning techniques (RAG specifically) to understand and respond to user inputs.
+This chatbot is built using Python and utilizes machine learning techniques to understand and respond to user inputs.
+
+## Built With
+
+- [Python](https://www.python.org/)
+- [LangChain](https://www.langchain.com/)
+- [Cohere API](https://cohere.ai) - Natural language processing
+- [Neo4j](https://neo4j.com) - Graph database
 
 ## Installation
 

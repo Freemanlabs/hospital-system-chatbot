@@ -1,10 +1,10 @@
 [data]
-hospitals_data = "https://raw.githubusercontent.com/hfhoffman1144/langchain_neo4j_rag_app/main/data/hospitals.csv"
-payers_data = "https://raw.githubusercontent.com/hfhoffman1144/langchain_neo4j_rag_app/main/data/payers.csv"
-physicians_data = "https://raw.githubusercontent.com/hfhoffman1144/langchain_neo4j_rag_app/main/data/physicians.csv"
-patients_data = "https://raw.githubusercontent.com/hfhoffman1144/langchain_neo4j_rag_app/main/data/patients.csv"
-visits_data = "https://raw.githubusercontent.com/hfhoffman1144/langchain_neo4j_rag_app/main/data/visits.csv"
-reviews_data = "https://raw.githubusercontent.com/hfhoffman1144/langchain_neo4j_rag_app/main/data/reviews.csv"
+hospitals_data = "https://raw.githubusercontent.com/Freemanlabs/hospital-system-chatbot/master/data/hospitals.csv"
+payers_data = "https://raw.githubusercontent.com/Freemanlabs/hospital-system-chatbot/master/data/payers.csv"
+physicians_data = "https://raw.githubusercontent.com/Freemanlabs/hospital-system-chatbot/master/data/physicians.csv"
+patients_data = "https://raw.githubusercontent.com/Freemanlabs/hospital-system-chatbot/master/data/patients.csv"
+visits_data = "https://raw.githubusercontent.com/Freemanlabs/hospital-system-chatbot/master/data/visits.csv"
+reviews_data = "https://raw.githubusercontent.com/Freemanlabs/hospital-system-chatbot/master/data/reviews.csv"
 
 [model]
 agent_model = "command-r-plus"

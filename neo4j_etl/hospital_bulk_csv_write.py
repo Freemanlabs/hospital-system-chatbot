@@ -2,23 +2,25 @@ import logging
 import os
 
 import dotenv
+import toml
 from neo4j import GraphDatabase
 from retry import retry
 
-config = dotenv.dotenv_values(".env")
+dotenv.load_dotenv()
+config = toml.load("config.toml")
 
 # Paths to CSV files containing hospital data
-HOSPITALS_CSV_PATH = config["HOSPITALS_CSV_PATH"]
-PAYERS_CSV_PATH = config["PAYERS_CSV_PATH"]
-PHYSICIANS_CSV_PATH = config["PHYSICIANS_CSV_PATH"]
-PATIENTS_CSV_PATH = config["PATIENTS_CSV_PATH"]
-VISITS_CSV_PATH = config["VISITS_CSV_PATH"]
-REVIEWS_CSV_PATH = config["REVIEWS_CSV_PATH"]
+HOSPITALS_CSV_PATH = config["data"]["hospitals_data"]
+PAYERS_CSV_PATH = config["data"]["payers_data"]
+PHYSICIANS_CSV_PATH = config["data"]["physicians_data"]
+PATIENTS_CSV_PATH = config["data"]["patients_data"]
+VISITS_CSV_PATH = config["data"]["visits_data"]
+REVIEWS_CSV_PATH = config["data"]["reviews_data"]
 
 # Neo4j config
-NEO4J_URI = config["NEO4J_URI"]
-NEO4J_USERNAME = config["NEO4J_USERNAME"]
-NEO4J_PASSWORD = config["NEO4J_PASSWORD"]
+NEO4J_URI = os.getenv("NEO4J_URI")
+NEO4J_USERNAME = os.getenv("NEO4J_USERNAME")
+NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
 
 # Configure the logging module
 logging.basicConfig(

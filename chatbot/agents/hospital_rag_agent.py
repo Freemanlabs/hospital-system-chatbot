@@ -1,12 +1,17 @@
+import dotenv
+import toml
 from langchain import hub
 from langchain.agents import AgentExecutor, Tool
 from langchain_cohere import ChatCohere, create_cohere_react_agent
 
 from chatbot.chains.hospital_cypher_chain import hospital_cypher_chain
 from chatbot.chains.hospital_review_chain import reviews_vector_chain
-from chatbot.tools.wait_times import get_current_wait_times, get_most_available_hospital
+from chatbot.tools.wait_times import MostAvailableHospital, get_current_wait_times, get_most_available_hospital
 
-agent_llm = ChatCohere(model="command-r")
+dotenv.load_dotenv()
+config = toml.load("config.toml")
+
+agent_llm = ChatCohere(model=config["model"]["agent_model"])
 
 tools = [
     Tool(
@@ -45,16 +50,7 @@ tools = [
         input should be "Jordan Inc".
         """,
     ),
-    Tool(
-        name="Availability",
-        func=get_most_available_hospital,
-        description="""
-        Use when you need to find out which hospital has the shortest
-        wait time. This tool does not have any information about aggregate
-        or historical wait times. This tool returns a dictionary with the
-        hospital name as the key and the wait time in minutes as the value.
-        """,
-    ),
+    # MostAvailableHospital(), #takes a lot of time as it needs to query the database for all hospitals which are large in number
 ]
 
 hospital_agent_prompt = hub.pull("hwchase17/openai-functions-agent")
@@ -62,5 +58,5 @@ hospital_agent_prompt = hub.pull("hwchase17/openai-functions-agent")
 hospital_rag_agent = create_cohere_react_agent(llm=agent_llm, tools=tools, prompt=hospital_agent_prompt)
 
 hospital_rag_agent_executor = AgentExecutor(
-    agent=hospital_rag_agent, tools=tools, return_intermediate_steps=True, verbose=True
+    agent=hospital_rag_agent, tools=tools, return_intermediate_steps=False, verbose=False
 )

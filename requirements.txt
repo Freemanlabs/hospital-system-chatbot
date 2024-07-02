@@ -1,0 +1,8 @@
+langchain
+langchain-cohere
+langchain-community
+langchainhub
+neo4j
+numpy
+python-dotenv
+toml

@@ -1,15 +1,21 @@
-from dotenv import dotenv_values
+import os
+
+import dotenv
+import toml
 from langchain.prompts import PromptTemplate
 from langchain_cohere import ChatCohere
 from langchain_community.chains.graph_qa.cypher import GraphCypherQAChain
 from langchain_community.graphs import Neo4jGraph
 
-qa_llm = ChatCohere(model="command-r")
-cypher_llm = ChatCohere(model="command-r")
+dotenv.load_dotenv()
+config = toml.load("config.toml")
 
-config = dotenv_values(".env")
+qa_llm = ChatCohere(model=config["model"]["qa_model"])
+cypher_llm = ChatCohere(model=config["model"]["cypher_model"])
 
-graph = Neo4jGraph(url=config["NEO4J_URI"], username=config["NEO4J_USERNAME"], password=config["NEO4J_PASSWORD"])
+graph = Neo4jGraph(
+    url=os.getenv("NEO4J_URI"), username=os.getenv("NEO4J_USERNAME"), password=os.getenv("NEO4J_PASSWORD")
+)
 
 graph.refresh_schema()
 
@@ -141,7 +147,7 @@ hospital_cypher_chain = GraphCypherQAChain.from_llm(
     cypher_llm=cypher_llm,
     qa_llm=qa_llm,
     graph=graph,
-    verbose=True,
+    verbose=False,
     qa_prompt=qa_generation_prompt,
     cypher_prompt=cypher_generation_prompt,
     validate_cypher=True,

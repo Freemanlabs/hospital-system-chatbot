@@ -1,16 +1,19 @@
 import os
-from typing import Any
+from typing import Any, Dict, Tuple, Union
 
+import dotenv
 import numpy as np
-from dotenv import dotenv_values
+from langchain.tools import BaseTool
 from langchain_community.graphs import Neo4jGraph
 
-config = dotenv_values(".env")
+dotenv.load_dotenv()
 
 
 def _get_current_hospitals() -> list[str]:
     """Fetch a list of current hospital names from a Neo4j database."""
-    graph = Neo4jGraph(url=config["NEO4J_URI"], username=config["NEO4J_USERNAME"], password=config["NEO4J_PASSWORD"])
+    graph = Neo4jGraph(
+        url=os.getenv("NEO4J_URI"), username=os.getenv("NEO4J_USERNAME"), password=os.getenv("NEO4J_PASSWORD")
+    )
 
     current_hospitals = graph.query(
         """
@@ -47,7 +50,7 @@ def get_current_wait_times(hospital: str) -> str:
         return f"{minutes} minutes"
 
 
-def get_most_available_hospital(_: Any) -> dict[str, float]:
+def get_most_available_hospital() -> dict[str, float]:
     """Find the hospital with the shortest wait time."""
     current_hospitals = _get_current_hospitals()
 
@@ -58,3 +61,25 @@ def get_most_available_hospital(_: Any) -> dict[str, float]:
     best_wait_time = current_wait_times[best_time_idx]
 
     return {best_hospital: best_wait_time}
+
+
+class MostAvailableHospital(BaseTool):
+    name = "Availability"
+    description = """
+    Use when you need to find out which hospital has the shortest
+    wait time. This tool does not have any information about aggregate
+    or historical wait times. This tool returns a dictionary with the
+    hospital name as the key and the wait time in minutes as the value.
+    """
+
+    def _to_args_and_kwargs(self, tool_input: Union[str, Dict]) -> Tuple[Tuple, Dict]:
+        return (), {}
+
+    def _run(self):
+        """Use the tool."""
+        response = get_most_available_hospital()
+        return response
+
+    def _arun(self):
+        """Use the tool asynchronously."""
+        raise NotImplementedError("get_most_available_hospital does not support async")
